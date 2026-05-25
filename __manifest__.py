@@ -1,0 +1,21 @@
+{
+    'name': 'Hospital Management System',
+    'version': '1.0',
+    'author': 'Ahmed Rabee',
+    'license': 'LGPL-3',
+    'category': 'Healthcare',
+    'summary': 'Manage hospital patients',
+    'data': [
+        'security/security_groups.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rules.xml',
+        'views/patient_views.xml',
+        'views/department_views.xml',
+        'views/doctor_views.xml',
+        'views/res_partner_views.xml',
+        'reports/patient_report_action.xml',
+        'reports/patient_report_template.xml',
+    ],
+    'installable': True,
+    'application': True,
+}

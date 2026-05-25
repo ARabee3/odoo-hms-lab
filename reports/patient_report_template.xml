@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_patient_status">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- Title and Image Row -->
+                        <div class="row mb-4">
+                            <div class="col-8">
+                                <h2 style="color: #DC3545;">Patient Status Report</h2>
+                            </div>
+                            <div class="col-4 text-end">
+                                <img t-if="o.image" t-att-src="image_data_uri(o.image)" 
+                                     style="max-height: 100px; max-width: 100px;" 
+                                     alt="Patient Image"/>
+                            </div>
+                        </div>
+
+                        <!-- Patient Info - Two Columns -->
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <p><strong>Name:</strong> <span t-esc="o.first_name + ' ' + o.last_name"/></p>
+                                <p><strong>Age:</strong> <span t-esc="o.age"/></p>
+                                <p><strong>Department:</strong> <span t-esc="o.department_id.name or ''"/></p>
+                                <p><strong>Doctors:</strong> 
+                                    <span t-if="o.doctor_ids">
+                                        <span t-esc="', '.join(o.doctor_ids.mapped('first_name'))"/>
+                                    </span>
+                                    <span t-else="">None</span>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Birth date:</strong> <span t-esc="o.birth_date or ''"/></p>
+                                <p><strong>PCR:</strong> <span t-esc="'Yes' if o.pcr else 'No'"/></p>
+                                <p><strong>Blood Type:</strong> <span t-esc="o.blood_type or ''"/></p>
+                                <p><strong>Email:</strong> <span t-esc="o.email or ''"/></p>
+                            </div>
+                        </div>
+
+                        <!-- Log History Table -->
+                        <h4 style="color: #DC3545; text-align: center;">Log History</h4>
+                        <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                            <thead style="background-color: #007BFF; color: white;">
+                                <tr>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">User</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Date</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Info</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.log_history_ids" t-as="log">
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><span t-esc="log.created_by.name"/></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><span t-esc="log.date"/></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><span t-esc="log.description"/></td>
+                                    </tr>
+                                </t>
+                                <tr t-if="not o.log_history_ids">
+                                    <td colspan="3" style="padding: 8px; border: 1px solid #ddd; text-align: center;">No log history available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

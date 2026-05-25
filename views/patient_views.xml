@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hms_patient_form" model="ir.ui.view">
+        <field name="name">hms.patient.form</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(hms.action_patient_report)d" string="Print Report" type="action" class="btn-primary"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                            <field name="email"/>
+                            <field name="birth_date"/>
+                            <field name="age"/>
+                            <field name="department_id"/>
+                            <field name="capacity"/>
+                        </group>
+                        <group>
+                            <field name="blood_type"/>
+                            <field name="pcr"/>
+                            <field name="cr_ratio" required="pcr"/>
+                            <field name="doctor_ids" widget="many2many_tags" readonly="not department_id" groups="hms.group_hms_manager"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                    </group>
+                    <group invisible="not age or age &lt; 50">
+                        <field name="history" widget="html"/>
+                    </group>
+                    <notebook>
+                        <page string="Log History">
+                            <field name="log_history_ids" readonly="1">
+                                <list>
+                                    <field name="created_by"/>
+                                    <field name="date"/>
+                                    <field name="description"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hms_patient_list" model="ir.ui.view">
+        <field name="name">hms.patient.list</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="email"/>
+                <field name="birth_date"/>
+                <field name="blood_type"/>
+                <field name="pcr"/>
+                <field name="age"/>
+                <field name="department_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_hms_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hms.patient</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hms_root" name="HMS" sequence="10"/>
+    <menuitem id="menu_hms_patients" name="Patients"
+              parent="menu_hms_root"
+              action="action_hms_patient"
+              sequence="10"/>
+
+</odoo>

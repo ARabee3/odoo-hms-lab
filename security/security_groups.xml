@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_hms" model="ir.module.category">
+        <field name="name">Hospital Management</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="group_hms_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_hms"/>
+        <field name="comment">User group for Hospital Management System</field>
+    </record>
+
+    <record id="group_hms_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_hms"/>
+        <field name="implied_ids" eval="[(4, ref('group_hms_user'))]"/>
+        <field name="comment">Manager group for Hospital Management System</field>
+    </record>
+
+</odoo>

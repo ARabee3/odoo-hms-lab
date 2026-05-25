@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add related_patient_id inside the Misc group of Sales & Purchase tab -->
+    <record id="view_partner_form_inherit_hms" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.hms</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <group name="misc" position="inside">
+                <field name="related_patient_id"/>
+            </group>
+        </field>
+    </record>
+
+    <!-- Make Tax ID (vat) required for all customers -->
+    <record id="view_partner_form_inherit_vat_required" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.vat.required</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- Show website field in the partner list view -->
+    <record id="view_partner_tree_inherit_website" model="ir.ui.view">
+        <field name="name">res.partner.list.inherit.website</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="website" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
